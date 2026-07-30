@@ -19,7 +19,6 @@ import {
   buildEntries,
   findNavById,
   type NavEntryBuilder,
-  pruneEmptyNavSections,
   sortNavTree,
   updateNavById,
 } from './utils';
@@ -41,7 +40,7 @@ import {
  * evaluated the flags as on. Those sessions need the decision passed at boot
  * time rather than re-evaluated here.
  */
-function isClientNavTreeEnabled(): boolean {
+export function isClientNavTreeEnabled(): boolean {
   return (
     getFeatureFlagClient().getBooleanValue(FlagKeys.GrafanaMultiTenantNavTree, false) &&
     getFeatureFlagClient().getBooleanValue(FlagKeys.PluginsUseMTPlugins, false)
@@ -57,10 +56,10 @@ export function getInitialNavTree(): NavModelItem[] {
     return config.bootData?.navTree ?? [];
   }
 
-  const staticTree = applyAppSubUrl(buildStaticNavTree());
-  // Empty sections (connections, cfg/access without children) are pruned like
-  // the server prunes them after its enterprise hooks run.
-  return pruneEmptyNavSections(staticTree);
+  // Empty attachment-parent shells (connections, cfg/access) are intentionally
+  // kept here: the plugin nav merge needs them as targets. Pruning happens when
+  // the merge completes, mirroring the server's post-hook pruning.
+  return applyAppSubUrl(buildStaticNavTree());
 }
 
 /**
