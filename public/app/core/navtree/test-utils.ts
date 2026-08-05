@@ -61,6 +61,7 @@ export function setupNavTestState({
     disableLoginForm: false,
     publicDashboardAccessToken: undefined,
     provisioningEnabled: false,
+    navigationAppSections: {},
     featureToggles,
     ...configOverrides,
   });
