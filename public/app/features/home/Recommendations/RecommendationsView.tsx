@@ -6,7 +6,7 @@ import { type GrafanaTheme2 } from '@grafana/data';
 import { t, Trans } from '@grafana/i18n';
 import { Badge, Button, Grid, Icon, Stack, Text, useStyles2 } from '@grafana/ui';
 
-import { type Solution, type SolutionId } from '../solutions/model';
+import { type Solution, type SolutionId } from '../solutions/types';
 
 import { RecommendationCard } from './RecommendationCard';
 import { RecommendationExisting } from './RecommendationExisting';
